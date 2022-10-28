@@ -1,0 +1,110 @@
+<div id="table" class="container bg-light bg-opacity-50 rounded">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col"> #
+        <span
+          id="id"
+          ngbPopover="Sort by id"
+          [openDelay]="300"
+          [closeDelay]="500"
+          triggers="mouseenter:mouseleave"
+        >
+          <i class="ms-2 bi bi-chevron-expand"></i>
+        </span>
+        </th>
+      <th scope="col"> Heavy activity
+        <span
+          id="heavyActivity"
+          (click)="sortList('heavyActivity')"
+          ngbPopover="Sort by heavy activity"
+          [openDelay]="300"
+          [closeDelay]="500"
+          triggers="mouseenter:mouseleave"
+        >
+          <i class="ms-2 bi bi-chevron-expand"></i>
+        </span>
+      </th>
+      <th scope="col"> Light activity
+        <span
+          id="lightActivity"
+          (click)="sortList('lightActivity')"
+          ngbPopover="Sort by light activity"
+          [openDelay]="300"
+          [closeDelay]="500"
+          triggers="mouseenter:mouseleave"
+        >
+          <i class="ms-2 bi bi-chevron-expand"></i>
+        </span>
+      </th>
+      <th scope="col"> Mixed activity
+        <span
+          id="mixedActivity"
+          (click)="sortList('mixedActivity')"
+          ngbPopover="Sort by mixed activity"
+          [openDelay]="300"
+          [closeDelay]="500"
+          triggers="mouseenter:mouseleave"
+        >
+          <i class="ms-2 bi bi-chevron-expand"></i>
+        </span>
+      </th>
+      <th scope="col"> Date
+        <span
+          id="date"
+          (click)="sortList('date')"
+          ngbPopover="Sort by date"
+          [openDelay]="300"
+          [closeDelay]="500"
+          triggers="mouseenter:mouseleave"
+        >
+          <i class="ms-2 bi bi-chevron-expand"></i>
+        </span>
+      </th>
+      <th scope="col">Goals fulfilled
+        <span
+          id="goalsFulfilled"
+          (click)="sortList('goalsFulfilled')"
+          ngbPopover="Sort by goals fulfilled"
+          [openDelay]="300"
+          [closeDelay]="500"
+          triggers="mouseenter:mouseleave"
+        >
+          <i class="ms-2 bi bi-chevron-expand"></i>
+        </span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let activity of activities; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        <img
+          [src]="'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg'"
+          class="me-2"
+          style="width: 20px"
+        />
+        {{ activity.heavyActivity | percent }}
+      </td>
+      <td>
+        <img
+          [src]="'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg'"
+          class="me-2"
+          style="width: 20px"
+        />
+        {{ activity.lightActivity | percent }}
+      </td>
+      <td>
+        <img
+          [src]="'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg'"
+          class="me-2"
+          style="width: 20px"
+        />
+        {{ activity.mixedActivity | percent }}
+      </td>
+      <td>{{ activity.date | date:'mediumDate' }}</td>
+      <td>{{ activity.goalsFulfilled | percent }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

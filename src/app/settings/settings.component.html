@@ -1,0 +1,75 @@
+<div id="settings" class="container bg-light bg-opacity-50 rounded p-5">
+  <form>
+
+    <div class="mb-5 ">
+      <label for="workInterval" class="form-label"><h4>Work Interval</h4></label>
+      <div class="d-flex">
+        <input type="range" min="5" max="200" (change)="updateRangeValue($event)" class="form-range" id="workInterval">
+        <span class="ms-2 fw-bold" #workIntervalOutput [innerText]="this.rangeOutputsMap.get('workInterval') || 50" id="basic-addon1"></span>
+      </div>
+
+      <div id="workIntervalHelp" class="form-text">Specify work interval in minutes</div>
+      <div class="mt-5">
+        <ngb-accordion #acc="ngbAccordion">
+          <ngb-panel title="Advanced setting">
+            <ng-template ngbPanelContent>
+              <label for="workIntervalHeavy" class="form-label">Interval Heavy</label>
+              <div class="d-flex">
+                <input type="range" min="5" max="200" (change)="updateRangeValue($event)" class="form-range" id="workIntervalHeavy">
+                <span class="ms-2 fw-bold" #workIntervalHeavyOutput [innerText]="this.rangeOutputsMap.get('workIntervalHeavy') || 50" id="basic-addon2"></span>
+              </div>
+
+              <label for="workIntervalLight" class="form-label">Interval Light</label>
+              <div class="d-flex">
+                <input type="range" min="5" max="200" (change)="updateRangeValue($event)" class="form-range" id="workIntervalLight">
+                <span class="ms-2 fw-bold" #workIntervalLightOutput [innerText]="this.rangeOutputsMap.get('workIntervalLight') || 50" id="basic-addon3"></span>
+              </div>
+
+              <label for="workIntervalMixed" class="form-label">Interval Mixed</label>
+              <div class="d-flex">
+                <input type="range" min="5" max="200" (change)="updateRangeValue($event)" class="form-range" id="workIntervalMixed">
+                <span class="ms-2 fw-bold" #workIntervalMixedOutput [innerText]="this.rangeOutputsMap.get('workIntervalMixed') || 50" id="basic-addon4"></span>
+              </div>
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+      </div>
+    </div>
+
+    <div class="my-5">
+      <label for="restInterval" class="form-label"><h4>Rest Interval</h4></label>
+      <div class="d-flex">
+        <input type="range" min="5" max="200" (change)="updateRangeValue($event)" class="form-range" id="restInterval">
+        <span class="ms-2 fw-bold" #restIntervalOutput [innerText]="this.rangeOutputsMap.get('restInterval') || 50" id="basic-addon8"></span>
+      </div>
+      <div id="restIntervalHelp" class="form-text">Specify rest interval in minutes</div>
+      <div class="mt-5">
+        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+          <ngb-panel title="Advanced settings">
+            <ng-template ngbPanelContent>
+              <label for="restIntervalHeavy" class="form-label">Interval Heavy</label>
+              <div class="d-flex">
+                <input type="range" min="5" max="200" (change)="updateRangeValue($event)" class="form-range" id="restIntervalHeavy">
+                <span class="ms-2 fw-bold" #restIntervalHeavyOutput [innerText]="this.rangeOutputsMap.get('restIntervalHeavy') || 50" id="basic-addon5"></span>
+              </div>
+
+              <label for="restIntervalLight" class="form-label">Interval Light</label>
+              <div class="d-flex">
+                <input type="range" min="5" max="200" (change)="updateRangeValue($event)" class="form-range" id="restIntervalLight">
+                <span class="ms-2 fw-bold" #restIntervalLightOutput [innerText]="this.rangeOutputsMap.get('restIntervalLight') || 50" id="basic-addon6"></span>
+              </div>
+
+              <label for="restIntervalMixed" class="form-label">Interval Mixed</label>
+              <div class="d-flex">
+                <input type="range" min="5" max="200" (change)="updateRangeValue($event)" class="form-range" id="restIntervalMixed">
+                <span class="ms-2 fw-bold" #restIntervalMixedOutput [innerText]="this.rangeOutputsMap.get('restIntervalMixed') || 50" id="basic-addon7"></span>
+              </div>
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+</div>
