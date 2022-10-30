@@ -14,6 +14,7 @@ import { ArticlesComponent } from './content/articles/articles.component';
 import { TableComponent } from './table/table.component';
 import { SettingsComponent } from './settings/settings.component';
 import {AuthModule} from "./auth/auth.module";
+import { PlannerComponent } from './planner/planner.component';
 let CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
 @NgModule({
@@ -26,7 +27,8 @@ let CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
     CanvasJSChart,
     ArticlesComponent,
     TableComponent,
-    SettingsComponent
+    SettingsComponent,
+    PlannerComponent
   ],
   imports: [
     BrowserModule,

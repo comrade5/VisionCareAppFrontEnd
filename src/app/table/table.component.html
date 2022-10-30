@@ -1,3 +1,17 @@
+<div class="intervals bg-light bg-opacity-75 container rounded mb-5 py-3">
+  <p class="fw-bold">Choose period</p>
+  <div class="btn-group align-self-center" role="group" aria-label="Basic checkbox toggle button group">
+    <input (click)="onIntervalGroupsClick($event)" id="hourly" type="radio" class="btn-check" name="btnradio" autocomplete="off">
+    <label class="btn btn-outline-primary" for="hourly">Hourly</label>
+
+    <input (click)="onIntervalGroupsClick($event)" id="daily" type="radio" class="btn-check" name="btnradio" autocomplete="off" checked>
+    <label class="btn btn-outline-primary" for="daily">Daily</label>
+
+    <input (click)="onIntervalGroupsClick($event)" id="monthly" type="radio" class="btn-check" name="btnradio" autocomplete="off">
+    <label class="btn btn-outline-primary" for="monthly">Monthly</label>
+  </div>
+</div>
+
 <div id="table" class="container bg-light bg-opacity-50 rounded">
   <table class="table table-striped">
     <thead>
@@ -102,7 +116,7 @@
         />
         {{ activity.mixedActivity | percent }}
       </td>
-      <td>{{ activity.date | date:'mediumDate' }}</td>
+      <td>{{ activity.date | date: myMap.get(shownBy) }}</td>
       <td>{{ activity.goalsFulfilled | percent }}</td>
     </tr>
     </tbody>

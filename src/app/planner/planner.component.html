@@ -1,0 +1,99 @@
+<div class="planner container rounded bg-opacity-50 bg-light m-5">
+  <div class="row">
+    <div class="calendar m-5 col-auto">
+      <h5 class="mb-3">Please pick range of dates</h5>
+      <ngb-datepicker class="bg-light bg-opacity-50 rounded" #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+      </ngb-datepicker>
+
+      <ng-template #t let-date let-focused="focused">
+        <span
+          class="custom-day"
+          [class.focused]="focused"
+          [class.range]="isRange(date)"
+          [class.faded]="isHovered(date) || isInside(date)"
+          (mouseenter)="hoveredDate = date"
+          (mouseleave)="hoveredDate = null"
+        >
+          {{ date.day }}
+        </span>
+      </ng-template>
+    </div>
+
+    <div class="goal m-5 w-25 col-auto">
+      <div class="mb-5">
+        <label for="nameOfGoal" class="form-label fw-bold">Name of the goal</label>
+        <input type="email" class="form-control" id="nameOfGoal" [(ngModel)]="goalForm.name" placeholder="Math exam">
+      </div>
+      <div class="mb-5">
+        <label for="summary" class="form-label fw-bold">What do you want to achieve?</label>
+        <textarea class="form-control" id="summary" rows="3" [(ngModel)]="goalForm.summary"></textarea>
+      </div>
+      <div class="period-hour d-flex">
+        <div class="hoursDevote">
+          <label for="hoursDedicated" class="form-label fw-bold m-0">Hours to dedicate</label>
+          <ngb-timepicker id="hoursDedicated" [(ngModel)]="this.goalForm.hoursDedicated"></ngb-timepicker>
+        </div>
+
+        <div class="intervals">
+          <p class="ms-5 fw-bold">Choose intervals</p>
+          <div class="btn-group mt-3 h-25 align-self-center ms-5" role="group" aria-label="Basic checkbox toggle button group">
+            <input type="checkbox" class="btn-check" id="hourly" autocomplete="off" (click)="addToCheckedIntervals($event)">
+            <label class="btn btn-outline-primary" for="hourly">Hourly</label>
+
+            <input type="checkbox" class="btn-check" id="daily" autocomplete="off" (click)="addToCheckedIntervals($event)">
+            <label class="btn btn-outline-primary" for="daily">Daily</label>
+
+            <input type="checkbox" class="btn-check" id="monthly" autocomplete="off" (click)="addToCheckedIntervals($event)">
+            <label class="btn btn-outline-primary" for="monthly">Monthly</label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col d-flex flex-row-reverse me-5 align-self-end">
+      <button (click)="onGoalFormSubmit()" type="button" class="btn btn-primary mb-5">Add goal</button>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div *ngIf="goals.length > 0" class="list-of-goals mb-5">
+      <ngb-accordion #acc="ngbAccordion">
+        <ngb-panel *ngFor="let goal of goals" [title]="goal.name">
+          <ng-template ngbPanelContent>
+
+            <dl class="row">
+
+              <dt class="col-sm-3">Period</dt>
+              <dd class="col-sm-9">
+                <dl class="row">
+                  <dt class="col-sm-4">From</dt>
+                  <dd class="col-sm-8">{{goal.period.from | date}}</dd>
+                  <dt class="col-sm-4">To</dt>
+                  <dd class="col-sm-8">{{goal.period.to | date}}</dd>
+                </dl>
+              </dd>
+
+              <dt class="col-sm-3">Name of the goal</dt>
+              <dd class="col-sm-9">{{goal.name}}</dd>
+
+              <dt class="col-sm-3">Summary of goal</dt>
+              <dd class="col-sm-9">
+                <p>{{goal.summary}}</p>
+              </dd>
+
+              <dt class="col-sm-3">Hours dedicated</dt>
+              <dd class="col-sm-9">{{goal.hoursDedicated.hour}} hours {{goal.hoursDedicated.minute}} minutes</dd>
+
+              <dt class="col-sm-3 text-truncate">Notify</dt>
+              <dd class="col-sm-9">{{printNotifyInterval(goal.notifyInterval)}}</dd>
+            </dl>
+
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </div>
+  </div>
+
+</div>

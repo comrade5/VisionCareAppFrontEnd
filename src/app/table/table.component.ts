@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {range} from "rxjs";
+import * as _ from "lodash";
 
 interface Activity {
   heavyActivity: number;
@@ -28,6 +29,13 @@ export class TableComponent implements OnInit {
 
   activities = ACTIVITIES;
   previousId: string = 'id';
+  shownBy: string = 'daily';
+
+  myMap = new Map<string, string>([
+    ["hourly", "H:mm"],
+    ["daily", "MMM d, y"],
+    ['monthly', "MMM, y"]
+  ]);
 
   constructor() { }
 
@@ -84,4 +92,65 @@ export class TableComponent implements OnInit {
 
     this.previousId = id;
   }
+
+  groupByAndFlattenCustom() {
+    let newArray: Array<Activity> = [];
+    let groupedDict: _.Dictionary<Activity[]> = _.groupBy(ACTIVITIES, (e: Activity) => (e.date?.getFullYear()||2).toString()+e.date?.getMonth().toString())
+
+    Object.entries(groupedDict).forEach(([key, value], index) => {
+      let heavyActivity: number = 0;
+      let lightActivity: number = 0;
+      let mixedActivity: number = 0;
+      let goalsFulfilled: number = 0;
+      let year = parseInt(key.substring(0, 4));
+      let month = parseInt(key.substring(4));
+
+      value.forEach(a => {
+        heavyActivity+=a.heavyActivity;
+        lightActivity+=a.lightActivity;
+        mixedActivity+=a.mixedActivity;
+        goalsFulfilled+=a.goalsFulfilled;
+      })
+
+      heavyActivity/=value.length;
+      lightActivity/=value.length;
+      mixedActivity/=value.length;
+      goalsFulfilled/=value.length;
+
+      newArray.push(
+        {
+          heavyActivity: heavyActivity,
+          lightActivity: lightActivity,
+          mixedActivity: mixedActivity,
+          goalsFulfilled: goalsFulfilled,
+          date: new Date(year, month),
+        }
+      );
+    });
+
+    this.activities = newArray;
+  }
+
+  onIntervalGroupsClick(event: Event) {
+    const input = (event.target as HTMLInputElement);
+    this.groupByAndFlattenCustom();
+    this.shownBy = input.id;
+  }
 }
+
+// const obj = {
+//   name: 'Tom',
+//   country: 'Chile',
+// };
+//
+// // ✅ forEach after Object.keys
+// (Object.keys(obj) as (keyof typeof obj)[]).forEach((key, index) => {
+//   // 👇️ name Tom 0, country Chile 1
+//   console.log(key, obj[key], index);
+// });
+//
+// // ✅ forEach after Object.entries (better)
+// Object.entries(obj).forEach(([key, value], index) => {
+//   // 👇️ name Tom 0, country Chile 1
+//   console.log(key, value, index);
+// });
