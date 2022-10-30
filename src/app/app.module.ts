@@ -15,6 +15,7 @@ import { TableComponent } from './table/table.component';
 import { SettingsComponent } from './settings/settings.component';
 import {AuthModule} from "./auth/auth.module";
 import { PlannerComponent } from './planner/planner.component';
+import { AppRoutingModule } from './app-routing.module';
 let CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
 @NgModule({
@@ -34,7 +35,8 @@ let CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
     BrowserModule,
     NgbModule,
     FormsModule,
-    AuthModule
+    AuthModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

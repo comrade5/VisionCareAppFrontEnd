@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Item} from "../interfaces";
 
 @Component({
   selector: 'app-articles',
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.css']
 })
+
 export class ArticlesComponent implements OnInit {
+  @Input() items: Item[] = [];
 
   constructor() { }
 

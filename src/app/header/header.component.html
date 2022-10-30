@@ -13,12 +13,12 @@
     <i class="bi bi-bell mt-3 text-white"></i>
     <div class="profile">
       <div ngbDropdown class="d-inline-block">
-          <a ngbDropdownToggle href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+          <a ngbDropdownToggle class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
           </a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <button ngbDropdownItem>Login</button>
-          <button ngbDropdownItem>Registration</button>
+          <button routerLink="/login" ngbDropdownItem>Login</button>
+          <button routerLink="/register" ngbDropdownItem>Registration</button>
           <button ngbDropdownItem>Profile</button>
         </div>
       </div>

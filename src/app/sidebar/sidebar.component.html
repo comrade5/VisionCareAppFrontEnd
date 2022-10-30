@@ -7,22 +7,22 @@
     </a>
     <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
       <li class="nav-item">
-        <a href="#" class="nav-link active py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-          <i class="bi bi-house"></i>
+        <a routerLink="/main" #main (click)="onSideBarIconClick(main)" class="nav-link py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+          <i class="bi bi-house" ></i>
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
+        <a routerLink="/settings" #settings (click)="onSideBarIconClick(settings)" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
           <i class="bi bi-gear"></i>
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+        <a routerLink="/activity" #activity (click)="onSideBarIconClick(activity)" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
           <i class="bi bi-graph-up"></i>
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
+        <a routerLink="/planner" #planner (click)="onSideBarIconClick(planner)" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
           <i class="bi bi-calendar-date"></i>
         </a>
       </li>

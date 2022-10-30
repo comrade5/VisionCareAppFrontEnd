@@ -13,6 +13,12 @@ export class SidebarComponent implements OnInit {
   @ViewChild('header') header?: ElementRef;
   @ViewChild('bodyPd') bodypd?: ElementRef;
   @ViewChild('navbar') navbar?: ElementRef;
+  @ViewChild('main') main?: ElementRef;
+  @ViewChild('settings') settings?: ElementRef;
+  @ViewChild('activity') activity?: ElementRef;
+  @ViewChild('planner') planner?: ElementRef;
+
+  previousElement?: HTMLAnchorElement;
 
   constructor(config: NgbOffcanvasConfig, private offcanvasService: NgbOffcanvas) {
     // customize default values of offcanvas used by this component tree
@@ -36,4 +42,9 @@ export class SidebarComponent implements OnInit {
     this.header?.nativeElement.classList.toggle('body-pd')
   }
 
+  onSideBarIconClick(element: HTMLAnchorElement) {
+    element.classList.toggle('active');
+    this.previousElement?.classList.toggle('active');
+    this.previousElement = element;
+  }
 }
