@@ -6,7 +6,8 @@ import {PlannerComponent} from "./planner/planner.component";
 import {ContentComponent} from "./content/content.component";
 import {LoginComponent} from "./auth/login/login.component";
 import {RegistrationComponent} from "./auth/registration/registration.component";
-import {TableComponent} from "./table/table.component";
+import {TableComponent} from "./activity/table/table.component";
+import {ActivityComponent} from "./activity/activity.component";
 
 const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
@@ -14,7 +15,7 @@ const routes: Routes = [
   { path: 'main', component: ContentComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
-  { path: 'activity', component: TableComponent },
+  { path: 'activity', component: ActivityComponent },
   { path: '', redirectTo: '/main', pathMatch: 'full' },
 ];
 

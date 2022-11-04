@@ -1,31 +1,22 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
-
-interface AdvancedSettings {
-  heavyInterval: number;
-  lightInterval: number;
-  mixedInterval: number;
-}
-
-interface Settings {
-  workInterval: number;
-  advancedWorkInterval: AdvancedSettings;
-  restInterval: number;
-  advancedRestInterval: AdvancedSettings;
-}
+import {Component, ElementRef, Inject, OnInit} from '@angular/core';
+import {APP_SERVICE_CONFIG} from "../appconfig/appconfig.service";
+import {AppConfig} from "../appconfig/appconfig.interface";
+import {HttpClient} from "@angular/common/http";
+import {Settings} from "../models/interfaces";
 
 const SETTINGS: Settings =
   {
     workInterval: 60,
     advancedWorkInterval: {
-      heavyInterval: 70,
-      lightInterval: 80,
-      mixedInterval: 90,
+      heavyInterval: 10,
+      lightInterval: 0,
+      mixedIntervalPenalty: 5,
     },
-    restInterval: 70,
+    restInterval: 60,
     advancedRestInterval: {
-      heavyInterval: 30,
-      lightInterval: 80,
-      mixedInterval: 20,
+      heavyInterval: 10,
+      lightInterval: 0,
+      mixedIntervalPenalty: 5,
     }
   };
 

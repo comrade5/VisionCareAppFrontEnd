@@ -1,0 +1,38 @@
+<div class="bg-light bg-opacity-75 container rounded mb-5 py-3">
+  <form (ngSubmit)="onFilterSubmit()" class="row row-cols-lg-auto g-3 align-items-center">
+    <div class="col-12">
+      <label class="visually-hidden" for="selectType">Preference</label>
+      <select name="type" [(ngModel)]="currentFilter.type" class="form-select" id="selectType">
+        <option selected>All</option>
+        <option>Heavy</option>
+        <option>Light</option>
+        <option>Mixed</option>
+      </select>
+    </div>
+
+    <div class="col-12">
+      <label class="visually-hidden" for="selectRange">Preference</label>
+      <select name="range" [(ngModel)]="currentFilter.range" class="form-select" id="selectRange">
+        <option selected>All</option>
+        <option>Today</option>
+        <option>Week</option>
+        <option>Month</option>
+      </select>
+    </div>
+
+    <div class="col-12">
+      <div class="form-check">
+        <input name="isFullGoal" [(ngModel)]="currentFilter.isFullGoal" class="form-check-input" type="checkbox" id="inlineFormCheck">
+        <label class="form-check-label" for="inlineFormCheck">
+          Goal is fully fulfilled
+        </label>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+  </form>
+</div>
+
+<app-table [activities]="activities" [shownBy]="shownBy"></app-table>

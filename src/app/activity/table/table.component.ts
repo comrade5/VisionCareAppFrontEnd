@@ -1,24 +1,7 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {range} from "rxjs";
 import * as _ from "lodash";
-
-interface Activity {
-  heavyActivity: number;
-  lightActivity: number;
-  mixedActivity: number;
-  goalsFulfilled: number;
-  date?: Date
-}
-
-const ACTIVITIES: Activity[] = [
-  {
-    heavyActivity: 0.111,
-    lightActivity: 0.333,
-    mixedActivity: 0.600,
-    goalsFulfilled: 0.500,
-    date: new Date('2001-01-10'),
-  }
-];
+import {Activity} from "../model";
 
 @Component({
   selector: 'app-table',
@@ -27,9 +10,10 @@ const ACTIVITIES: Activity[] = [
 })
 export class TableComponent implements OnInit {
 
-  activities = ACTIVITIES;
+  @Input() activities: Activity[] = [];
+  @Input() shownBy: string = 'daily';
+
   previousId: string = 'id';
-  shownBy: string = 'daily';
 
   myMap = new Map<string, string>([
     ["hourly", "H:mm"],
@@ -40,15 +24,6 @@ export class TableComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    range(1, 10).forEach(e => {
-      this.activities.push({
-        heavyActivity: Math.random(),
-        lightActivity: Math.random(),
-        mixedActivity: Math.random(),
-        goalsFulfilled: Math.random(),
-        date: new Date(Math.random()*10+2000, Math.random()*50),
-      })
-    });
   }
 
   sortList(id: string) {
@@ -93,49 +68,9 @@ export class TableComponent implements OnInit {
     this.previousId = id;
   }
 
-  groupByAndFlattenCustom() {
-    let newArray: Array<Activity> = [];
-    let groupedDict: _.Dictionary<Activity[]> = _.groupBy(ACTIVITIES, (e: Activity) => (e.date?.getFullYear()||2).toString()+e.date?.getMonth().toString())
 
-    Object.entries(groupedDict).forEach(([key, value], index) => {
-      let heavyActivity: number = 0;
-      let lightActivity: number = 0;
-      let mixedActivity: number = 0;
-      let goalsFulfilled: number = 0;
-      let year = parseInt(key.substring(0, 4));
-      let month = parseInt(key.substring(4));
 
-      value.forEach(a => {
-        heavyActivity+=a.heavyActivity;
-        lightActivity+=a.lightActivity;
-        mixedActivity+=a.mixedActivity;
-        goalsFulfilled+=a.goalsFulfilled;
-      })
 
-      heavyActivity/=value.length;
-      lightActivity/=value.length;
-      mixedActivity/=value.length;
-      goalsFulfilled/=value.length;
-
-      newArray.push(
-        {
-          heavyActivity: heavyActivity,
-          lightActivity: lightActivity,
-          mixedActivity: mixedActivity,
-          goalsFulfilled: goalsFulfilled,
-          date: new Date(year, month),
-        }
-      );
-    });
-
-    this.activities = newArray;
-  }
-
-  onIntervalGroupsClick(event: Event) {
-    const input = (event.target as HTMLInputElement);
-    this.groupByAndFlattenCustom();
-    this.shownBy = input.id;
-  }
 }
 
 // const obj = {

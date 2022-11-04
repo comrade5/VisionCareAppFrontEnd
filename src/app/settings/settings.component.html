@@ -4,7 +4,7 @@
     <div class="mb-5 ">
       <label for="workInterval" class="form-label"><h4>Work Interval</h4></label>
       <div class="d-flex">
-        <input type="range" min="5" max="200" [(ngModel)]="settings.workInterval" [ngModelOptions]="{standalone: true}" class="form-range" id="workInterval">
+        <input type="range" min="15" max="180" [(ngModel)]="settings.workInterval" [ngModelOptions]="{standalone: true}" class="form-range" id="workInterval">
         <span class="ms-2 fw-bold" #workIntervalOutput [innerText]="settings.workInterval" id="basic-addon1"></span>
       </div>
 
@@ -13,22 +13,22 @@
         <ngb-accordion #acc="ngbAccordion">
           <ngb-panel title="Advanced setting">
             <ng-template ngbPanelContent>
-              <label for="workIntervalHeavy" class="form-label">Interval Heavy</label>
+              <label for="workIntervalHeavyPenalty" class="form-label">Interval Heavy</label>
               <div class="d-flex">
-                <input type="range" min="5" max="200" [(ngModel)]="settings.advancedWorkInterval.heavyInterval" [ngModelOptions]="{standalone: true}" class="form-range" id="workIntervalHeavy">
+                <input type="range" min="10" max="30" [(ngModel)]="settings.advancedWorkInterval.heavyInterval" [ngModelOptions]="{standalone: true}" class="form-range" id="workIntervalHeavyPenalty">
                 <span class="ms-2 fw-bold" #workIntervalHeavyOutput [innerText]="settings.advancedWorkInterval.heavyInterval" id="basic-addon2"></span>
               </div>
 
-              <label for="workIntervalLight" class="form-label">Interval Light</label>
+              <label for="workIntervalLightPenalty" class="form-label">Interval Light</label>
               <div class="d-flex">
-                <input type="range" min="5" max="200" [(ngModel)]="settings.advancedWorkInterval.lightInterval" [ngModelOptions]="{standalone: true}" class="form-range" id="workIntervalLight">
+                <input type="range" min="0" max="30" [(ngModel)]="settings.advancedWorkInterval.lightInterval" [ngModelOptions]="{standalone: true}" class="form-range" id="workIntervalLightPenalty">
                 <span class="ms-2 fw-bold" #workIntervalLightOutput [innerText]="settings.advancedWorkInterval.lightInterval" id="basic-addon3"></span>
               </div>
 
-              <label for="workIntervalMixed" class="form-label">Interval Mixed</label>
+              <label for="workIntervalMixedPenalty" class="form-label">Interval Mixed</label>
               <div class="d-flex">
-                <input type="range" min="5" max="200" [(ngModel)]="settings.advancedWorkInterval.mixedInterval" [ngModelOptions]="{standalone: true}" class="form-range" id="workIntervalMixed">
-                <span class="ms-2 fw-bold" #workIntervalMixedOutput [innerText]="settings.advancedWorkInterval.mixedInterval" id="basic-addon4"></span>
+                <input type="range" min="5" max="30" [(ngModel)]="settings.advancedWorkInterval.mixedIntervalPenalty" [ngModelOptions]="{standalone: true}" class="form-range" id="workIntervalMixedPenalty">
+                <span class="ms-2 fw-bold" #workIntervalMixedOutput [innerText]="settings.advancedWorkInterval.mixedIntervalPenalty" id="basic-addon4"></span>
               </div>
             </ng-template>
           </ngb-panel>
@@ -39,7 +39,7 @@
     <div class="my-5">
       <label for="restInterval" class="form-label"><h4>Rest Interval</h4></label>
       <div class="d-flex">
-        <input type="range" min="5" max="200" [ngModelOptions]="{standalone: true}" [(ngModel)]="settings.restInterval" class="form-range" id="restInterval">
+        <input type="range" min="15" max="180" [ngModelOptions]="{standalone: true}" [(ngModel)]="settings.restInterval" class="form-range" id="restInterval">
         <span class="ms-2 fw-bold" #restIntervalOutput [innerText]="settings.restInterval" id="basic-addon8"></span>
       </div>
       <div id="restIntervalHelp" class="form-text">Specify rest interval in minutes</div>
@@ -47,22 +47,22 @@
         <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
           <ngb-panel title="Advanced settings">
             <ng-template ngbPanelContent>
-              <label for="restIntervalHeavy" class="form-label">Interval Heavy</label>
+              <label for="restIntervalHeavyPenalty" class="form-label">Interval Heavy</label>
               <div class="d-flex">
-                <input type="range" min="5" max="200" [(ngModel)]="settings.advancedRestInterval.heavyInterval" [ngModelOptions]="{standalone: true}" class="form-range" id="restIntervalHeavy">
+                <input type="range" min="10" max="30" [(ngModel)]="settings.advancedRestInterval.heavyInterval" [ngModelOptions]="{standalone: true}" class="form-range" id="restIntervalHeavyPenalty">
                 <span class="ms-2 fw-bold" #restIntervalHeavyOutput [innerText]="settings.advancedRestInterval.heavyInterval" id="basic-addon5"></span>
               </div>
 
-              <label for="restIntervalLight" class="form-label">Interval Light</label>
+              <label for="restIntervalLightPenalty" class="form-label">Interval Light</label>
               <div class="d-flex">
-                <input type="range" min="5" max="200" [ngModelOptions]="{standalone: true}" [(ngModel)]="settings.advancedRestInterval.lightInterval" class="form-range" id="restIntervalLight">
+                <input type="range" min="0" max="30" [ngModelOptions]="{standalone: true}" [(ngModel)]="settings.advancedRestInterval.lightInterval" class="form-range" id="restIntervalLightPenalty">
                 <span class="ms-2 fw-bold" #restIntervalLightOutput [innerText]="settings.advancedRestInterval.lightInterval" id="basic-addon6"></span>
               </div>
 
-              <label for="restIntervalMixed" class="form-label">Interval Mixed</label>
+              <label for="restIntervalMixedPenalty" class="form-label">Interval Mixed</label>
               <div class="d-flex">
-                <input type="range" min="5" max="200" [ngModelOptions]="{standalone: true}" [(ngModel)]="settings.advancedRestInterval.mixedInterval" class="form-range" id="restIntervalMixed">
-                <span class="ms-2 fw-bold" #restIntervalMixedOutput [innerText]="settings.advancedRestInterval.mixedInterval" id="basic-addon7"></span>
+                <input type="range" min="5" max="30" [ngModelOptions]="{standalone: true}" [(ngModel)]="settings.advancedRestInterval.mixedIntervalPenalty" class="form-range" id="restIntervalMixedPenalty">
+                <span class="ms-2 fw-bold" #restIntervalMixedOutput [innerText]="settings.advancedRestInterval.mixedIntervalPenalty" id="basic-addon7"></span>
               </div>
             </ng-template>
           </ngb-panel>

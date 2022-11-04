@@ -11,11 +11,14 @@ import { ChartComponent } from './content/chart/chart.component';
 
 import * as CanvasJSAngularChart from '../assets/canvasjs.angular.component';
 import { ArticlesComponent } from './content/articles/articles.component';
-import { TableComponent } from './table/table.component';
+import { TableComponent } from './activity/table/table.component';
 import { SettingsComponent } from './settings/settings.component';
 import {AuthModule} from "./auth/auth.module";
 import { PlannerComponent } from './planner/planner.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ActivityComponent } from './activity/activity.component';
+import {APP_CONFIG, APP_SERVICE_CONFIG} from "./appconfig/appconfig.service";
+import {HttpClientModule} from "@angular/common/http";
 let CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
 @NgModule({
@@ -29,16 +32,23 @@ let CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
     ArticlesComponent,
     TableComponent,
     SettingsComponent,
-    PlannerComponent
+    PlannerComponent,
+    ActivityComponent,
   ],
   imports: [
     BrowserModule,
     NgbModule,
     FormsModule,
     AuthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_SERVICE_CONFIG,
+      useValue: APP_CONFIG
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

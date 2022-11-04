@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Item} from "./interfaces";
+import {Item} from "../models/interfaces";
 
 const ITEMS: Item[] = [
   {
