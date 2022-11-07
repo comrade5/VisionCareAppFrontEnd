@@ -1,19 +1,22 @@
 <div id="registration" class="container bg-light bg-opacity-50 rounded p-5">
-  <form>
+  <div *ngIf="isNotMatchingPassword">
+    <h3 class="alert alert-danger">Passwords are not matching!</h3>
+  </div>
+  <form (ngSubmit)="onFormSubmit()">
     <div class="mb-3">
       <label for="email" class="form-label">Username</label>
-      <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+      <input type="email" [(ngModel)]="currentUserForm.email" required class="form-control" name="email" id="email" aria-describedby="emailHelp">
       <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
-      <input type="password" class="form-control" id="password">
+      <input type="password" [(ngModel)]="currentUserForm.password" required class="form-control" name="password" id="password">
     </div>
     <div class="mb-5">
       <label for="confirmPassword" class="form-label">Confirm password</label>
-      <input type="password" class="form-control" id="confirmPassword">
+      <input type="password" [(ngModel)]="currentUserForm.matchingPassword" required class="form-control" name="matchingPassword" id="confirmPassword">
     </div>
 
-    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" class="btn btn-primary">Register</button>
   </form>
 </div>

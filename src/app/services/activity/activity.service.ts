@@ -10,12 +10,32 @@ import {ApiActivity} from "../../models/interfaces";
 })
 export class ActivityService {
 
+  ACTIVITY_PATH = '';
+
   constructor(@Inject(APP_SERVICE_CONFIG) private config: AppConfig,
               private http: HttpClient,
-              private userService: UserService) { }
+              private userService: UserService) {
+
+    this.ACTIVITY_PATH = this.config.activityServiceApiEndpoint+'/activity';
+  }
 
   getAllUserActivities() {
-    this.http.get<ApiActivity[]>(this.config.activityServiceApiEndpoint+"/activities/add")
-      .subscribe( data => console.log(data));
+    this.http.get<ApiActivity[]>(this.ACTIVITY_PATH+'/'+this.userService.getUserId());
+  }
+
+  takeUserBreak() {
+    this.http.get(this.ACTIVITY_PATH+'/break/'+this.userService.getUserId());
+  }
+
+  getUserTodayActivities() {
+    this.http.get(this.ACTIVITY_PATH+'/today/'+this.userService.getUserId());
+  }
+
+  getUserWeekActivities() {
+    this.http.get(this.ACTIVITY_PATH+'/week/'+this.userService.getUserId());
+  }
+
+  getUserMonthActivities() {
+    this.http.get(this.ACTIVITY_PATH+'/month/'+this.userService.getUserId());
   }
 }

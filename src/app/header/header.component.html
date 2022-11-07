@@ -17,8 +17,9 @@
             <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
           </a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <button routerLink="/login" ngbDropdownItem>Login</button>
-          <button routerLink="/register" ngbDropdownItem>Registration</button>
+          <button *ngIf="!isLogged()" routerLink="/login" ngbDropdownItem>Login</button>
+          <button *ngIf="!isLogged()" routerLink="/register" ngbDropdownItem>Registration</button>
+          <button *ngIf="isLogged()" (click)="logoutUser()" ngbDropdownItem>Logout</button>
           <button ngbDropdownItem>Profile</button>
         </div>
       </div>

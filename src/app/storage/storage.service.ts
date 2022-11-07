@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import  *  as CryptoJS from  'crypto-js';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class StorageService {
     localStorage.setItem(key, this.encrypt(value));
   }
 
-  public getData(key: string) {
+  public getData(key: string) : string {
     let data = localStorage.getItem(key)|| "";
     return this.decrypt(data);
   }

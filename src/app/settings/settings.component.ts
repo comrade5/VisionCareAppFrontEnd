@@ -1,23 +1,21 @@
-import {Component, ElementRef, Inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Inject, OnInit} from '@angular/core';
 import {APP_SERVICE_CONFIG} from "../appconfig/appconfig.service";
 import {AppConfig} from "../appconfig/appconfig.interface";
 import {HttpClient} from "@angular/common/http";
 import {Settings} from "../models/interfaces";
+import {ImageService} from "../services/image/image.service";
+import {UserService} from "../services/user/user.service";
 
-const SETTINGS: Settings =
+const DEFAULT_SETTINGS: Settings =
   {
-    workInterval: 60,
-    advancedWorkInterval: {
-      heavyInterval: 10,
-      lightInterval: 0,
-      mixedIntervalPenalty: 5,
-    },
     restInterval: 60,
-    advancedRestInterval: {
-      heavyInterval: 10,
-      lightInterval: 0,
-      mixedIntervalPenalty: 5,
-    }
+    restIntervalHeavy: 10,
+    restIntervalLight: 0,
+    restIntervalMixed: 5,
+    workInterval: 60,
+    workIntervalHeavy: 10,
+    workIntervalLight: 0,
+    workIntervalMixed: 5,
   };
 
 @Component({
@@ -27,17 +25,37 @@ const SETTINGS: Settings =
 })
 export class SettingsComponent implements OnInit {
 
-  settings: Settings = SETTINGS;
-  rangeOutputsMap = new Map<string, number>();
+  userSettings: Settings = DEFAULT_SETTINGS;
 
-  constructor() {
+  constructor(private imageService: ImageService,
+              private userService: UserService) {
 
   }
 
   ngOnInit(): void {
+    if(this.userService.isLoggedIn()) {
+      this.getSettings();
+    }
+
   }
 
-  updateRangeValue(event: Event) {
-    const inputElement = (event.target as HTMLInputElement);
+  getSettings() {
+    this.userService.getUserConfig()
+        .subscribe((data: Settings) => {
+          this.userSettings=data;
+          this.userService.saveUserConfig(data);
+        });
+  }
+
+  onFileSelected($event: Event) {
+    // @ts-ignore
+    const file:File = ($event.target as HTMLInputElement).files[0];
+
+    this.imageService.sendImage(file).subscribe(e => console.log(e));
+
+  }
+
+  onSettingsFormSubmit() {
+    this.userService.sendUserConfig(this.userSettings);
   }
 }

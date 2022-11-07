@@ -4,17 +4,15 @@ export interface Item {
   summary: string;
 }
 
-export interface AdvancedSettings {
-  heavyInterval: number;
-  lightInterval: number;
-  mixedIntervalPenalty: number;
-}
-
 export interface Settings {
   workInterval: number;
-  advancedWorkInterval: AdvancedSettings;
+  workIntervalHeavy: number;
+  workIntervalLight: number;
+  workIntervalMixed: number;
   restInterval: number;
-  advancedRestInterval: AdvancedSettings;
+  restIntervalHeavy: number;
+  restIntervalLight: number;
+  restIntervalMixed: number;
 }
 
 export interface ApiActivity {
@@ -25,4 +23,10 @@ export interface ApiActivity {
   heavyActivity: number;
   lightActivity: number;
   mixActivity: number;
+}
+
+export interface UserModel {
+  email: string;
+  password: string;
+  matchingPassword: string;
 }
