@@ -15,3 +15,7 @@ body {
 .bi-eye-fill {
   color: rebeccapurple;
 }
+
+.eye-link {
+  outline: none !important;
+}

@@ -3,6 +3,14 @@ export interface Item {
   link: string;
   summary: string;
 }
+//
+// export interface Activity {
+//   heavyActivity: number;
+//   lightActivity: number;
+//   mixedActivity: number;
+//   duration: number;
+//   date: Date
+// }
 
 export interface Settings {
   workInterval: number;
@@ -15,10 +23,18 @@ export interface Settings {
   restIntervalMixed: number;
 }
 
+export interface Activity {
+  dateOfActivity: Date;
+  duration: number;
+  heavyActivity: number;
+  lightActivity: number;
+  mixActivity: number;
+}
+
 export interface ApiActivity {
   id: number;
   userId: string;
-  dateOfActivity: string;
+  dateOfActivity: number;
   duration: number;
   heavyActivity: number;
   lightActivity: number;
@@ -29,4 +45,27 @@ export interface UserModel {
   email: string;
   password: string;
   matchingPassword: string;
+}
+
+export interface Period {
+  from: number,
+  to: number,
+}
+
+export interface TimeCustom {
+  hour: number,
+  minute: number,
+}
+
+export enum NotifyInterval {
+  HOURLY= "Hourly", DAILY = "Daily", MONTHLY = "Monthly"
+}
+
+export interface Goal {
+  goalId: string;
+  period: Period;
+  name: string;
+  summary: string;
+  timeDedicated: TimeCustom;
+  notifyInterval: NotifyInterval[];
 }

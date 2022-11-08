@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {range} from "rxjs";
 import * as _ from "lodash";
-import {Activity} from "../model";
+import {Activity} from "../../models/interfaces";
 
 @Component({
   selector: 'app-table',
@@ -16,7 +16,7 @@ export class TableComponent implements OnInit {
   previousId: string = 'id';
 
   myMap = new Map<string, string>([
-    ["hourly", "H:mm"],
+    ["hourly", "MMM d, y H:mm"],
     ["daily", "MMM d, y"],
     ['monthly', "MMM, y"]
   ]);
@@ -39,15 +39,15 @@ export class TableComponent implements OnInit {
           break;
         }
         case 'mixedActivity': {
-          return a.mixedActivity;
+          return a.mixActivity;
           break;
         }
-        case 'goalsFulfilled': {
-          return a.goalsFulfilled;
+        case 'duration': {
+          return a.duration;
           break;
         }
         case 'date': {
-          return (a.date?.getTime() || 1);
+          return a.dateOfActivity?.getTime();
           break;
         }
         default:

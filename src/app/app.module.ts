@@ -19,6 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ActivityComponent } from './activity/activity.component';
 import {APP_CONFIG, APP_SERVICE_CONFIG} from "./appconfig/appconfig.service";
 import {HttpClientModule} from "@angular/common/http";
+import { CustomDatePipe } from './pipes/custom-date.pipe';
 let CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
 @NgModule({
@@ -34,6 +35,7 @@ let CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
     SettingsComponent,
     PlannerComponent,
     ActivityComponent,
+    CustomDatePipe,
   ],
   imports: [
     BrowserModule,

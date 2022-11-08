@@ -31,7 +31,7 @@
       <div class="period-hour d-flex">
         <div class="hoursDevote">
           <label for="hoursDedicated" class="form-label fw-bold m-0">Hours to dedicate</label>
-          <ngb-timepicker id="hoursDedicated" [(ngModel)]="this.goalForm.hoursDedicated"></ngb-timepicker>
+          <ngb-timepicker id="hoursDedicated" [(ngModel)]="this.goalForm.timeDedicated"></ngb-timepicker>
         </div>
 
         <div class="intervals">
@@ -62,16 +62,15 @@
       <ngb-accordion #acc="ngbAccordion">
         <ngb-panel *ngFor="let goal of goals" [title]="goal.name">
           <ng-template ngbPanelContent>
-
             <dl class="row">
 
               <dt class="col-sm-3">Period</dt>
               <dd class="col-sm-9">
                 <dl class="row">
                   <dt class="col-sm-4">From</dt>
-                  <dd class="col-sm-8">{{goal.period.from | date}}</dd>
+                  <dd class="col-sm-8">{{goal.period.from | customDate | date}}</dd>
                   <dt class="col-sm-4">To</dt>
-                  <dd class="col-sm-8">{{goal.period.to | date}}</dd>
+                  <dd class="col-sm-8">{{goal.period.to | customDate | date}}</dd>
                 </dl>
               </dd>
 
@@ -84,12 +83,12 @@
               </dd>
 
               <dt class="col-sm-3">Hours dedicated</dt>
-              <dd class="col-sm-9">{{goal.hoursDedicated.hour}} hours {{goal.hoursDedicated.minute}} minutes</dd>
+              <dd class="col-sm-9">{{goal.timeDedicated.hour}} hours {{goal.timeDedicated.minute}} minutes</dd>
 
               <dt class="col-sm-3 text-truncate">Notify</dt>
               <dd class="col-sm-9">{{printNotifyInterval(goal.notifyInterval)}}</dd>
             </dl>
-
+            <button class="btn btn-danger" (click)="removeGoal(goal.goalId)"><i class="bi bi-trash"></i> <span class="fw-bold ms-1">Remove goal</span> </button>
           </ng-template>
         </ngb-panel>
       </ngb-accordion>

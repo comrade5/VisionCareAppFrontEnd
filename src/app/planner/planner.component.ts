@@ -1,48 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbDate, NgbCalendar, NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap'
+import { v4 as uuid } from 'uuid';
+import {Goal, NotifyInterval, Period, TimeCustom} from "../models/interfaces";
+import {UserService} from "../services/user/user.service";
 
-interface Period {
-  from: Date,
-  to: Date,
-}
 
-interface TimeCustom {
-  hour: number,
-  minute: number,
-}
-
-enum NotifyInterval {
-  HOURLY= "Hourly", DAILY = "Daily", MONTHLY = "Monthly"
-}
-
-interface Goal {
-  period: Period,
-  name: string,
-  summary: string,
-  hoursDedicated: TimeCustom,
-  notifyInterval: NotifyInterval[],
-}
 
 const GOALS: Goal[] = [
   {
-    period: {from: new Date(2001, 1), to: new Date(2001, 11)},
+    goalId: uuid(),
+    period: {from: new Date(2001, 1).valueOf(), to: new Date(2001, 11).valueOf()},
     name: "Math Exam",
     summary: "Want to learn more about integrals",
-    hoursDedicated: {hour: 12, minute: 30},
+    timeDedicated: {hour: 12, minute: 30},
     notifyInterval: [NotifyInterval.HOURLY, NotifyInterval.MONTHLY],
   },
   {
-    period: {from: new Date(2001, 1), to: new Date(2001, 11)},
+    goalId: uuid(),
+    period: {from: new Date(2001, 1).valueOf(), to: new Date(2001, 11).valueOf()},
     name: "History Exam",
     summary: "Want to learn more about mongols",
-    hoursDedicated: {hour: 12, minute: 30},
+    timeDedicated: {hour: 12, minute: 30},
     notifyInterval: [NotifyInterval.HOURLY, NotifyInterval.MONTHLY],
   },
   {
-    period: {from: new Date(2001, 1), to: new Date(2001, 11)},
+    goalId: uuid(),
+    period: {from: new Date(2001, 1).valueOf(), to: new Date(2001, 11).valueOf()},
     name: "Physics Exam",
     summary: "Want to learn more about quantum physics",
-    hoursDedicated: {hour: 12, minute: 30},
+    timeDedicated: {hour: 12, minute: 30},
     notifyInterval: [NotifyInterval.HOURLY, NotifyInterval.MONTHLY],
   },
 ]
@@ -56,23 +42,29 @@ export class PlannerComponent implements OnInit {
 
   goals: Goal[] = GOALS;
 
-  goalForm: Goal = {
-    period: {} as Period,
-    name: '',
-    summary: '',
-    hoursDedicated: {hour: 0, minute: 0} as TimeCustom,
-    notifyInterval: [],
+  goalForm: Goal = PlannerComponent.getEmptyGoal();
+
+  static getEmptyGoal() : Goal {
+    return {
+      goalId: uuid(),
+      period: {} as Period,
+      name: '',
+      summary: '',
+      timeDedicated: {hour: 0, minute: 0} as TimeCustom,
+      notifyInterval: [],
+    };
   }
 
   ngOnInit(): void {
+    this.userService.getUserGoals().subscribe(e => this.goals = e);
   }
 
   hoveredDate: NgbDate | null = null;
 
   fromDate: NgbDate;
-  toDate: NgbDate;
+  toDate: NgbDate | null = null;
 
-  constructor(calendar: NgbCalendar) {
+  constructor(calendar: NgbCalendar, private userService: UserService) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
   }
@@ -83,7 +75,7 @@ export class PlannerComponent implements OnInit {
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
     } else {
-      this.toDate = date;
+      this.toDate = null;
       this.fromDate = date;
     }
   }
@@ -114,11 +106,15 @@ export class PlannerComponent implements OnInit {
   onGoalFormSubmit() {
     this.goalForm.period =
       {
-        from: new Date(this.fromDate.year, this.fromDate.month, this.fromDate.day),
-        to: new Date(this.toDate.year, this.toDate.month, this.toDate?.day),
+        from: new Date(this.fromDate.year, this.fromDate.month-1, this.fromDate.day).valueOf(),
+        to: this.toDate ? new Date(this.toDate.year, this.toDate.month-1, this.toDate.day).valueOf()
+                        : new Date(this.fromDate.year, this.fromDate.month-1, this.fromDate.day, 23, 59, 59).valueOf(),
       };
 
     this.goals = [...this.goals, this.goalForm];
+    this.userService.addUserGoal(this.goalForm);
+
+    this.goalForm = PlannerComponent.getEmptyGoal();
   }
 
   getNotifyInterval(intervalString: string) {
@@ -136,5 +132,10 @@ export class PlannerComponent implements OnInit {
     this.goalForm.notifyInterval.includes(interval)
       ? this.goalForm.notifyInterval = this.goalForm.notifyInterval.filter(e => e != interval)
       : this.goalForm.notifyInterval.push(interval);
+  }
+
+  removeGoal(goalId: string) {
+    this.userService.removeUserGoal(goalId);
+    this.goals = this.goals.filter(e => e.goalId != goalId);
   }
 }

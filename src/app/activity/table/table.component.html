@@ -14,7 +14,7 @@
           <i class="ms-2 bi bi-chevron-expand"></i>
         </span>
         </th>
-      <th scope="col"> Heavy activity
+      <th scope="col" > Heavy activity
         <span
           id="heavyActivity"
           (click)="sortList('heavyActivity')"
@@ -62,11 +62,11 @@
           <i class="ms-2 bi bi-chevron-expand"></i>
         </span>
       </th>
-      <th scope="col">Goals fulfilled
+      <th scope="col">Duration
         <span
-          id="goalsFulfilled"
+          id="duration"
           (click)="sortList('goalsFulfilled')"
-          ngbPopover="Sort by goals fulfilled"
+          ngbPopover="Sort by duration"
           [openDelay]="300"
           [closeDelay]="500"
           triggers="mouseenter:mouseleave"
@@ -101,10 +101,10 @@
           class="me-2"
           style="width: 20px"
         />
-        {{ activity.mixedActivity | percent }}
+        {{ activity.mixActivity | percent }}
       </td>
-      <td>{{ activity.date | date: myMap.get(shownBy) }}</td>
-      <td>{{ activity.goalsFulfilled | percent }}</td>
+      <td>{{ activity.dateOfActivity | date: myMap.get(shownBy) }}</td>
+      <td>{{ activity.duration }}</td>
     </tr>
     </tbody>
   </table>
