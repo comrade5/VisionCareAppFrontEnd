@@ -70,8 +70,8 @@ function createWindow () {
   mainWindow.webContents.send("startDaemon", {});
 
   // Ipc handlers between main and renderer
-  ipcMain.handle('notify', async (event, timeLeft, isBreak) => {
-    notification.body = `${timeLeft} left until your ${isBreak ? 'work' : 'break'}`;
+  ipcMain.handle('notifyEvent', async (event, timeLeft, isBreak) => {
+    notification.body = `${timeLeft} min left until your ${isBreak ? 'work' : 'break'}`;
     notification.show();
   });
 
@@ -100,7 +100,7 @@ app.on('activate', function () {
 
 // Notification options of the app
 const notificationOptions = {
-  title: 'Interval Notification',
+  title: 'Reminder notification',
   subtitle: 'Notifying about time left',
   body: 'Body of Custom Notification',
   silent: false,

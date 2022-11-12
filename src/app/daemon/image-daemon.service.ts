@@ -4,12 +4,12 @@ import {UserService} from "../services/user/user.service";
 import {Settings, Verdict} from "../models/interfaces";
 import {Observer} from "rxjs";
 import {ActivityService} from "../services/activity/activity.service";
+import {MainChannelUtilService} from "../mainChannelUtil/main-channel-util.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageDaemonService {
-
 
   private currentTime: number = 0;
   private h: number = 0;
@@ -21,9 +21,13 @@ export class ImageDaemonService {
   restPeriod: number = 0;
   currentUserSettings: Settings = {} as Settings;
   imageTimer?: ReturnType<typeof setInterval>;
+  NOTIFICATION_INTERVAL: number = 15*60;
   private isStarted: boolean = false;
 
-  constructor(private imageService: ImageService, private userService: UserService, private activityService: ActivityService) {
+  constructor(private imageService: ImageService,
+              private userService: UserService,
+              private activityService: ActivityService,
+              private mainChannelUtil: MainChannelUtilService) {
     this.userService.getUserConfig().subscribe(e => this.currentUserSettings = e);
     this.refreshPeriods();
   }
@@ -126,7 +130,8 @@ export class ImageDaemonService {
 
   intervalFunction() {
     this.computeVars();
-    if(!this.isBreak && (this.workPeriod % (10) == 0 && this.getMinutes != 0)) {
+
+    if(!this.isBreak && (this.workPeriod % (5*60) == 0 && this.getMinutes != 0)) {
       // Send api request every 5 minutes
       this.imageService.isImageServiceUp()
         .subscribe(
@@ -137,15 +142,20 @@ export class ImageDaemonService {
 
     if(this.isBreak) {
       this.restPeriod--;
+
+      if(this.restPeriod % this.NOTIFICATION_INTERVAL == 0)
+        this.sendNotifyEvent();
+
       if(this.restPeriod <= 0)
         this.switchActivity();
     } else {
       this.workPeriod--;
+      if(this.workPeriod % this.NOTIFICATION_INTERVAL == 0)
+        this.sendNotifyEvent();
+
       if(this.workPeriod <= 0)
         this.switchActivity();
     }
-
-    console.log(this.getNiceFormatTime());
   }
 
   private switchActivity() {
@@ -158,6 +168,12 @@ export class ImageDaemonService {
 
     if(!this.isBreak)
       this.refreshPeriods();
+  }
 
+  private sendNotifyEvent() {
+    this.mainChannelUtil
+      .sendEventToMain('notifyEvent', (this.h*60 + this.m), this.isBreak)
+      ?.catch(e => console.log("Couldn't send notify event to main"))
+      .then(e => console.log('Notify event sent to main'));
   }
 }

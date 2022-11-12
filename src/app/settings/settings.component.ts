@@ -1,12 +1,7 @@
 import {AfterViewInit, Component, ElementRef, Inject, OnInit} from '@angular/core';
-import {APP_SERVICE_CONFIG} from "../appconfig/appconfig.service";
-import {AppConfig} from "../appconfig/appconfig.interface";
-import {HttpClient} from "@angular/common/http";
 import {Settings} from "../models/interfaces";
 import {ImageService} from "../services/image/image.service";
 import {UserService} from "../services/user/user.service";
-
-
 
 const DEFAULT_SETTINGS: Settings =
   {
@@ -53,23 +48,7 @@ export class SettingsComponent implements OnInit {
         });
   }
 
-  onFileSelected($event: Event) {
-    // @ts-ignore
-    const file:File = ($event.target as HTMLInputElement).files[0];
-
-    this.imageService.sendFile(file).subscribe(e => console.log(e));
-
-  }
-
   onSettingsFormSubmit() {
     this.userService.sendUserConfig(this.userSettings);
-  }
-
-  takeScreenShot(imageElem: HTMLImageElement) {
-    this.imageService.getScreenshot().then(e => console.log(e));
-  }
-
-  doSomethingWithCurrentValue($event: number) {
-
   }
 }
