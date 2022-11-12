@@ -5,30 +5,11 @@ const url = require("url");
 const path = require("path");
 
 let mainWindow
+let tray
 
 function createWindow () {
   let mainScreen = screen.getPrimaryDisplay().size;
   let pathToIcon = path.join(__dirname, `/dist/vision-care-app-ui/favicon.ico`);
-
-  // Tray (Notification Area)
-  const icon = nativeImage.createFromPath(pathToIcon)
-  let tray = new Tray(icon)
-  const contextMenu = Menu.buildFromTemplate([
-    { label: 'Item1', type: 'radio' },
-    { label: 'Item2', type: 'radio' },
-    { label: 'Item3', type: 'radio', checked: true },
-    { label: 'Item4', type: 'radio' }
-  ])
-
-  tray.setContextMenu(contextMenu)
-  tray.setToolTip('This is a vision care application')
-  tray.setTitle('Vision Care')
-  tray.on('click', () => {
-    if (mainWindow === null) createWindow();
-    else mainWindow.maximize();
-  });
-
-
 
   // The main window of the app
   mainWindow = new BrowserWindow({
@@ -43,7 +24,6 @@ function createWindow () {
     }
   })
 
-
   mainWindow.loadURL(
     url.format({
       pathname: path.join(__dirname, `/dist/vision-care-app-ui/index.html`),
@@ -55,31 +35,41 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.setZoomFactor(mainWindow.webContents.getZoomFactor()*0.9);
 
-  mainWindow.on('closed', function () {
-    mainWindow = null
+  mainWindow.on('closed', (event) => {
+    if(app.quitting) mainWindow = null;
   })
 
-  // Notification of the app
-  const notification = new Notification(notificationOptions);
+  mainWindow.on('close', (event) => {
+    //mainWindow = null
+    if(!app.quitting) {
+      event.preventDefault();
+      mainWindow.hide();
+    }
+  })
 
-  // setInterval(() => {
-  //   notification.body = '30 minutes left until your break'
-  //   notification.show();
-  // }, 10000)
+  // window.onbeforeunload = (e) => {
+  //   let answer = confirm('Do you really want to close the application?');
+  //   e.returnValue = answer;  // this will *prevent* the closing no matter what value is passed
+  //   if(answer) { win.destroy(); }  // this will close the app
+  // };
 
-  mainWindow.webContents.send("startDaemon", {});
+  // Tray (Notification Area)
+  const icon = nativeImage.createFromPath(pathToIcon)
+  if(!tray) {
+    tray = new Tray(icon)
+    const contextMenu = Menu.buildFromTemplate([
+      { label: "Exit", click: () => { app.quitting = true; app.quit()} }
+    ])
 
-  // Ipc handlers between main and renderer
-  ipcMain.handle('notifyEvent', async (event, timeLeft, isBreak) => {
-    notification.body = `${timeLeft} min left until your ${isBreak ? 'work' : 'break'}`;
-    notification.show();
-  });
-
-  ScreenshotUtil.startListeningForEvent();
-
-
-
-
+    tray.setContextMenu(contextMenu)
+    tray.setToolTip('This is a vision care application')
+    tray.setTitle('Vision Care')
+    tray.on('click', () => {
+      // if (mainWindow === null) createWindow();
+      // else mainWindow.maximize();
+      mainWindow.show();
+    });
+  }
 }
 
 // Set the name of app on the notification
@@ -88,10 +78,22 @@ if (process.platform === 'win32')
   app.setAppUserModelId("Vision care");
 }
 
-app.on('ready', createWindow)
+app.on('ready', () => {
+  createWindow();
+  // Notification of the app
+  const notification = new Notification(notificationOptions);
+
+  // Ipc handlers between main and renderer
+  ipcMain.handle('notifyEvent', async (event, timeLeft, isBreak) => {
+    notification.body = `${timeLeft} min left until your ${isBreak ? 'work' : 'break'}`;
+    notification.show();
+  });
+
+  ScreenshotUtil.startListeningForEvent();
+})
 
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
+  //if (process.platform !== 'darwin') app.quit()
 })
 
 app.on('activate', function () {
@@ -129,4 +131,6 @@ class ScreenshotUtil {
         });
   }
 }
+
+
 

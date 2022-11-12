@@ -11,11 +11,9 @@ import {MainChannelUtilService} from "../mainChannelUtil/main-channel-util.servi
 })
 export class ImageDaemonService {
 
-  private currentTime: number = 0;
   private h: number = 0;
   private m: number = 0;
   private s: number = 0;
-  private temp: number = 0;
   isBreak: boolean = false;
   workPeriod: number = 0;
   restPeriod: number = 0;
