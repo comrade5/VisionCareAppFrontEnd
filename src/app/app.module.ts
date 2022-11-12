@@ -22,6 +22,10 @@ import {HttpClientModule} from "@angular/common/http";
 import { CustomDatePipe } from './pipes/custom-date.pipe';
 let CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
+// Import ng-circle-progress-day-countdown
+import {RoundProgressModule} from 'angular-svg-round-progressbar';
+import { TimerComponent } from './timer/timer.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +40,7 @@ let CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
     PlannerComponent,
     ActivityComponent,
     CustomDatePipe,
+    TimerComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +48,8 @@ let CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
     FormsModule,
     AuthModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    RoundProgressModule
   ],
   providers: [
     {

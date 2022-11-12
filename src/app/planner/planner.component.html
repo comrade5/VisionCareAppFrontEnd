@@ -60,7 +60,7 @@
   <div class="row">
     <div *ngIf="goals.length > 0" class="list-of-goals mb-5">
       <ngb-accordion #acc="ngbAccordion">
-        <ngb-panel *ngFor="let goal of goals" [title]="goal.name">
+        <ngb-panel *ngFor="let goal of goals" [title]="goal.name" >
           <ng-template ngbPanelContent>
             <dl class="row">
 
@@ -87,6 +87,13 @@
 
               <dt class="col-sm-3 text-truncate">Notify</dt>
               <dd class="col-sm-9">{{printNotifyInterval(goal.notifyInterval)}}</dd>
+
+              <dt class="col-sm-3 text-truncate mt-3">Progress</dt>
+              <dd class="col-sm-9 mt-4"><ngb-progressbar class="w-25" type="success" [value]="this.progressMap.get(goal.goalId) || 0" [max]="convertToMinutes(goal) || 100">{{
+                convertToMinutes(goal) - (this.progressMap.get(goal.goalId) || 0) > 0 ? (this.progressMap.get(goal.goalId)||0)/convertToMinutes(goal) : 'complete'}}</ngb-progressbar></dd>
+
+              <dt class="col-sm-3 text-truncate">Status</dt>
+              <dd class="col-sm-9 fw-bolder {{isExpired(goal) ? 'text-danger' : 'text-success'}}" [innerText]="isExpired(goal) ? 'Expired!' : 'On going'"></dd>
             </dl>
             <button class="btn btn-danger" (click)="removeGoal(goal.goalId)"><i class="bi bi-trash"></i> <span class="fw-bold ms-1">Remove goal</span> </button>
           </ng-template>

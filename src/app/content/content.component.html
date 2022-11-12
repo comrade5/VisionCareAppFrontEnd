@@ -3,10 +3,10 @@
     <div class="col-lg-6 col-md-12">
       <div class="row gy-5">
         <div id="start-button" class="col-6">
-          <button type="button" #startButton (click)="onStartClicked(startSpan, startButton)" class="btn btn-primary btn-start text-bg-info text-bg-light fs-1 fw-bolder">
-                <i *ngIf="!started" class="bi bi-caret-right-fill"></i>
-                <i *ngIf="started" class="bi bi-square-fill"></i>
-                <span class="ms-2" #startSpan >Start</span>
+          <button type="button" #buttonStart (click)="onStartClicked()" class="btn btn-start text-bg-light fs-1 fw-bolder">
+                <i *ngIf="!isStarted()" class="bi bi-caret-right-fill"></i>
+                <i *ngIf="isStarted()" class="bi bi-square-fill"></i>
+                <span class="ms-2" [innerText]="isStarted() ? 'Stop' : 'Start'" ></span>
             </button>
         </div>
 

@@ -35,6 +35,7 @@ export interface ApiActivity {
   id: number;
   userId: string;
   dateOfActivity: number;
+  dateOfActivityInEpochMillisec: number;
   duration: number;
   heavyActivity: number;
   lightActivity: number;
@@ -68,4 +69,9 @@ export interface Goal {
   summary: string;
   timeDedicated: TimeCustom;
   notifyInterval: NotifyInterval[];
+}
+
+export interface Verdict {
+  verdict: string,
+  verdict_date: { date: number },
 }

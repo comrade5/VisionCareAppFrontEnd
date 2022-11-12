@@ -6,7 +6,8 @@
   "main": "main.js",
   "scripts": {
     "ng": "ng",
-    "start": "ng build --base-href ./ && electron .",
+    "start": "ng serve -o",
+    "electron": "ng build --base-href ./ && electron .",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -25,11 +26,14 @@
     "@popperjs/core": "^2.10.2",
     "@types/uuid": "^8.3.4",
     "angular-chart.js": "^1.1.0",
+    "angular-svg-round-progressbar": "^9.0.0",
     "bootstrap": "^5.2.0",
     "bootstrap-icons": "^1.9.1",
     "crypto-js": "^4.1.1",
+    "fs": "^0.0.1-security",
     "j-i-c": "^2.0.2",
     "lodash": "^4.17.21",
+    "path": "^0.12.7",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

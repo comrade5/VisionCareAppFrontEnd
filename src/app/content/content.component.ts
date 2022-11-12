@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Item} from "../models/interfaces";
+import {ImageDaemonService} from "../daemon/image-daemon.service";
 
 const ITEMS: Item[] = [
   {
@@ -37,17 +38,43 @@ const ITEMS: Item[] = [
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.css']
 })
-export class ContentComponent implements OnInit {
-  started: boolean = false;
+export class ContentComponent implements OnInit, AfterViewInit {
   items = ITEMS;
-  constructor() { }
+  @ViewChild('buttonStart') buttonStart!: ElementRef;
+
+  constructor(private imageDaemonService: ImageDaemonService) { }
 
   ngOnInit(): void {
+
   }
 
-  onStartClicked($event: HTMLSpanElement, startButton: HTMLButtonElement) {
-    $event.innerText = this.started ? 'Start' : 'Stop';
-    startButton.classList.toggle('text-bg-light');
-    this.started = !this.started;
+  ngAfterViewInit() {
+    this.applyProperColorOnStartButton();
+  }
+
+  isStarted() {
+    return this.imageDaemonService.hasStarted();
+  }
+
+  applyProperColorOnStartButton() {
+    if(this.isStarted()) {
+      this.buttonStart.nativeElement.classList.add('text-bg-info')
+      this.buttonStart.nativeElement.classList.remove('text-bg-light')
+    }
+    else {
+      this.buttonStart.nativeElement.classList.remove('text-bg-info')
+      this.buttonStart.nativeElement.classList.add('text-bg-light')
+    }
+
+  }
+
+  onStartClicked() {
+    if(this.imageDaemonService.hasStarted()) {
+      this.imageDaemonService.stop();
+    } else {
+      this.imageDaemonService.start();
+    }
+
+    this.applyProperColorOnStartButton();
   }
 }

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbDate, NgbCalendar, NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap'
 import { v4 as uuid } from 'uuid';
-import {Goal, NotifyInterval, Period, TimeCustom} from "../models/interfaces";
+import {ApiActivity, Goal, NotifyInterval, Period, TimeCustom} from "../models/interfaces";
 import {UserService} from "../services/user/user.service";
-
-
+import {ActivityService} from "../services/activity/activity.service";
 
 const GOALS: Goal[] = [
   {
@@ -41,8 +40,8 @@ const GOALS: Goal[] = [
 export class PlannerComponent implements OnInit {
 
   goals: Goal[] = GOALS;
-
   goalForm: Goal = PlannerComponent.getEmptyGoal();
+  progressMap: Map<string, number>;
 
   static getEmptyGoal() : Goal {
     return {
@@ -57,6 +56,7 @@ export class PlannerComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUserGoals().subscribe(e => this.goals = e);
+    this.activityService.getAllUserActivities().subscribe(e => this.computeProgresses(e));
   }
 
   hoveredDate: NgbDate | null = null;
@@ -64,9 +64,10 @@ export class PlannerComponent implements OnInit {
   fromDate: NgbDate;
   toDate: NgbDate | null = null;
 
-  constructor(calendar: NgbCalendar, private userService: UserService) {
+  constructor(calendar: NgbCalendar, private userService: UserService, private activityService: ActivityService) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+    this.progressMap = new Map<string, number>();
   }
 
   onDateSelection(date: NgbDate) {
@@ -137,5 +138,27 @@ export class PlannerComponent implements OnInit {
   removeGoal(goalId: string) {
     this.userService.removeUserGoal(goalId);
     this.goals = this.goals.filter(e => e.goalId != goalId);
+  }
+
+  convertToMinutes(goal: Goal) {
+    return (goal.timeDedicated.hour * 60 + goal.timeDedicated.minute);
+  }
+
+  private computeProgresses(e: ApiActivity[]) {
+    this.goals.forEach(goal => {
+
+      let betweenActivities =
+        e
+          .filter(act => act.dateOfActivityInEpochMillisec <= goal.period.to
+                          && act.dateOfActivityInEpochMillisec >= goal.period.from);
+      let totalDuration = 0;
+      betweenActivities.forEach(e => totalDuration+=e.duration);
+
+      this.progressMap.set(goal.goalId, totalDuration);
+    })
+  }
+
+  isExpired(goal: Goal) {
+    return new Date().valueOf() > goal.period.to;
   }
 }

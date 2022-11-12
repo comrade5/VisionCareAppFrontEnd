@@ -6,6 +6,8 @@ import {Settings} from "../models/interfaces";
 import {ImageService} from "../services/image/image.service";
 import {UserService} from "../services/user/user.service";
 
+
+
 const DEFAULT_SETTINGS: Settings =
   {
     restInterval: 60,
@@ -26,6 +28,10 @@ const DEFAULT_SETTINGS: Settings =
 export class SettingsComponent implements OnInit {
 
   userSettings: Settings = DEFAULT_SETTINGS;
+  endDate: Date = new Date(2022, 11, 11);
+  initDate: Date = new Date(2022, 11, 12);
+  current: number = 100;
+  max: number = 200;
 
   constructor(private imageService: ImageService,
               private userService: UserService) {
@@ -51,11 +57,19 @@ export class SettingsComponent implements OnInit {
     // @ts-ignore
     const file:File = ($event.target as HTMLInputElement).files[0];
 
-    this.imageService.sendImage(file).subscribe(e => console.log(e));
+    this.imageService.sendFile(file).subscribe(e => console.log(e));
 
   }
 
   onSettingsFormSubmit() {
     this.userService.sendUserConfig(this.userSettings);
+  }
+
+  takeScreenShot(imageElem: HTMLImageElement) {
+    this.imageService.getScreenshot().then(e => console.log(e));
+  }
+
+  doSomethingWithCurrentValue($event: number) {
+
   }
 }

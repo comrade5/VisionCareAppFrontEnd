@@ -56,7 +56,7 @@ export class ActivityComponent implements OnInit {
         lightActivity: e.lightActivity / totalActivity,
         mixActivity: e.mixActivity / totalActivity,
         duration: e.duration,
-        dateOfActivity: new Date(e.dateOfActivity),
+        dateOfActivity: new Date(e.dateOfActivityInEpochMillisec),
       }
       return activity;
     });

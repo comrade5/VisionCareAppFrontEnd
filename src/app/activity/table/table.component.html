@@ -80,31 +80,19 @@
     <tr *ngFor="let activity of activities; index as i">
       <th scope="row">{{ i + 1 }}</th>
       <td>
-        <img
-          [src]="'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg'"
-          class="me-2"
-          style="width: 20px"
-        />
+        <i class="bi bi-clipboard2-data me-3 text-danger"></i>
         {{ activity.heavyActivity | percent }}
       </td>
       <td>
-        <img
-          [src]="'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg'"
-          class="me-2"
-          style="width: 20px"
-        />
+        <i class="bi bi-clipboard2-data me-3 text-success"></i>
         {{ activity.lightActivity | percent }}
       </td>
       <td>
-        <img
-          [src]="'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg'"
-          class="me-2"
-          style="width: 20px"
-        />
+        <i class="bi bi-clipboard2-data me-3 text-warning"></i>
         {{ activity.mixActivity | percent }}
       </td>
       <td>{{ activity.dateOfActivity | date: myMap.get(shownBy) }}</td>
-      <td>{{ activity.duration }}</td>
+      <td>{{ activity.duration }} min</td>
     </tr>
     </tbody>
   </table>
