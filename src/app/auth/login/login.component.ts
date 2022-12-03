@@ -23,6 +23,13 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginFormSubmit() {
+    this.userError = '';
+    if(this.currentUserForm.email === '' ||
+        this.currentUserForm.password === '') {
+      this.currentUserForm.email === '' ? this.userError = 'EMPTY_EMAIL'
+                                        : this.userError = 'EMPTY_PASSWORD';
+      return;
+    }
     this.userService.loginUser(this.currentUserForm).subscribe((data: string) => {
       switch (data) {
         case 'NOT_FOUND': this.userError = data; break;

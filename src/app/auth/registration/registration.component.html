@@ -1,7 +1,10 @@
 <div id="registration" class="container bg-light bg-opacity-50 rounded p-5">
-  <div *ngIf="isNotMatchingPassword">
-    <h3 class="alert alert-danger">Passwords are not matching!</h3>
-  </div>
+  <ng-container [ngSwitch]="userError">
+    <h3 class="alert alert-danger" *ngSwitchCase="'EMPTY_EMAIL'">Email field should be filled!</h3>
+    <h3 class="alert alert-danger" *ngSwitchCase="'EMPTY_MATCHING_PASSWORD'">Confirm password field should be filled!</h3>
+    <h3 class="alert alert-danger" *ngSwitchCase="'EMPTY_PASSWORD'">Password field should be filled!</h3>
+    <h3 class="alert alert-danger" *ngSwitchCase="'NON_MATCHING_PASSWORDS'">Passwords should match!</h3>
+  </ng-container>
   <form (ngSubmit)="onFormSubmit()">
     <div class="mb-3">
       <label for="email" class="form-label">Username</label>

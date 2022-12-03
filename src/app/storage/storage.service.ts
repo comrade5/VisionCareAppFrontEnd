@@ -18,6 +18,7 @@ export class StorageService {
     let data = localStorage.getItem(key)|| "";
     return this.decrypt(data);
   }
+
   public removeData(key: string) {
     localStorage.removeItem(key);
   }
