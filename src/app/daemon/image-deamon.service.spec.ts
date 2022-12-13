@@ -14,7 +14,7 @@ describe('ImageDaemonService', () => {
   let service: ImageDaemonService;
   let userServiceSpy = jasmine.createSpyObj('UserService', ['getUserConfig', 'getData', 'removeData']);
   let activityServiceSpy = jasmine.createSpyObj('ActivityService', ['saveData', 'getData', 'removeData']);
-  let imageServiceSpy = jasmine.createSpyObj('ImageService', ['saveData', 'getData', 'removeData']);
+  let imageServiceSpy = jasmine.createSpyObj('ImageService', ['saveData', 'isImageServiceUp', 'getData', 'removeData']);
   let mainChannelUtilSpy = jasmine.createSpyObj('MainChannelUtilService', ['saveData', 'getData', 'removeData']);
   let userSetting: Settings = {
     workInterval: 123,

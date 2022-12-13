@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {RouterModule} from "@angular/router";
+import {FormsModule} from "@angular/forms";
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -7,6 +9,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      imports: [ RouterModule, FormsModule ]
     }).compileComponents();
   });
 
@@ -16,16 +19,17 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'VisionCareAppUI'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('VisionCareAppUI');
-  });
-
-  it('should render title', () => {
+  it('should render sidebar', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('VisionCareAppUI app is running!');
+    expect(compiled.querySelector('app-sidebar')).toBeTruthy();
+  });
+
+  it('should render header', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('app-header')).toBeTruthy();
   });
 });
